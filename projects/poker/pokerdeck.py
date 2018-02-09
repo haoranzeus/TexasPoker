@@ -34,7 +34,26 @@ class Poker:
         card = self.cards.pop(index)
         return card
 
+    @classmethod
+    def get_largest_card(cls, cards):
+        """
+        给出牌的列表，返回最大的一张
+        """
+        weight_tmp = 0
+        card_tmp = None
+        for card in cards:
+            if cls.POINT_WEIGHT[card[1]] > weight_tmp:
+                weight_tmp = cls.POINT_WEIGHT[card[1]]
+                card_tmp = card
+        return card_tmp
+
 
 if __name__ == '__main__':
     poker = Poker()
     print(poker.pop_card())
+    cards = []
+    for i in range(0, 3):
+        cards.append(poker.pop_card())
+    print(cards)
+    card = Poker.get_largest_card(cards)
+    print(card)

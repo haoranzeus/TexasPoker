@@ -97,3 +97,42 @@ class TestTexasPoker:
         tp._rever = ['heart', '8']
         hole_cards = [['spade', '8'], ['spade', '10']]
         assert_true(tp.is_one_pair(hole_cards))
+
+    def test_if_straight_return_largest(self):
+        weights = [1, 2, 3, 4, 5, 9]
+        tp = TexasPoker()
+        assert_equal(5, tp._if_straight_return_largest(weights))
+
+    def test_is_four_of_a_kind_weight(self):
+        tp = TexasPoker()
+        tp._flops = [['spade', '9'], ['heart', '9'], ['heart', 'A']]
+        tp._turn = ['spade', 'Q']
+        tp._rever = ['club', 'K']
+        hole_cards = [['diamond', '9'], ['club', '9']]
+        four_weight, single_weight = tp.is_four_of_a_kind_weight(hole_cards)
+        assert_equal(8, four_weight)
+        assert_equal(13, single_weight)
+
+    def test_is_fullhouse_weights(self):
+        tp = TexasPoker()
+        tp._flops = [['spade', '9'], ['heart', '9'], ['heart', 'A']]
+        tp._turn = ['spade', 'Q']
+        tp._rever = ['club', 'K']
+        hole_cards = [['diamond', '9'], ['spade', 'K']]
+        three_weight, pair_weight = tp.is_fullhouse_weights(hole_cards)
+        assert_equal(8, three_weight)
+        assert_equal(12, pair_weight)
+
+    def test_is_flush_weight(self):
+        tp = TexasPoker()
+        tp._flops = [['spade', '9'], ['spade', '3'], ['heart', 'A']]
+        tp._turn = ['spade', 'Q']
+        tp._rever = ['club', 'K']
+        hole_cards = [['spade', '8'], ['spade', 'K']]
+        assert_equal(12, tp.is_flush_weight(hole_cards))
+
+    def test_if_straight_weight(self):
+        weights1 = [1, 2, 3, 4, 5, 6, 9]
+        weights3 = [1, 2, 3, 4, 5, 9]
+        assert_equal(6, self.tp._if_straight_weight(weights1))
+        assert_equal(5, self.tp._if_straight_weight(weights3))
